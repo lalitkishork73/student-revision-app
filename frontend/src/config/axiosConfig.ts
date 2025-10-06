@@ -18,7 +18,7 @@ axiosInstance.interceptors.request.use(
     }
     return config;
   },
-  (error) => Promise.reject(error)
+  (error) => Promise.reject(new Error(error.message || String(error)))
 );
 
 // Response interceptor
@@ -36,9 +36,9 @@ axiosInstance.interceptors.response.use(
       }
       return Promise.reject(new Error(typeof data === "string" ? data : JSON.stringify(data)));
     } else if (error.request) {
-      return Promise.reject({ message: "No response from server" });
+      return Promise.reject(new Error("No response from server"));
     } else {
-      return Promise.reject({ message: error.message });
+      return Promise.reject(new Error(error.message));
     }
   }
 );
