@@ -1,8 +1,7 @@
-import axios from "axios";
 import { Router } from "express";
-import {getPythonVersion } from "../controllers/LlmaIndexController";
+import { getPythonVersionPing } from "../controllers/LlmaIndexController";
 const router = Router();
 
-router.get("/ping", getPythonVersion);
+router.get("/ping", getPythonVersionPing);
 
 export default router;
