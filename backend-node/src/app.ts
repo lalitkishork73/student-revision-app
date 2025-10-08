@@ -9,7 +9,6 @@ import routes from "./routes/index";
 import { errorHandler } from "./middlewares/errorMiddleware";
 import logger from "./utils/logger";
 import connectDB from "./config/db";
-import AppError from "./utils/appError"; // Import AppError
 
 // Import routes
 // import userRoutes from "./routes/userRoutes";
@@ -26,10 +25,10 @@ const app = express();
 // ---------- Global Middlewares ---------- //
 
 // Security HTTP headers
-app.use(helmet());
+// app.use(helmet());
 
 // Enable CORS
-app.use(cors());
+// app.use(cors());
 
 // Parse JSON body
 app.use(express.json());
@@ -38,7 +37,9 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
 // File upload support
-app.use(fileUpload());
+app.use(fileUpload({
+  limits: { fileSize: 50 * 1024 * 1024 },
+}));
 
 // Request logging (morgan + winston)
 interface MorganStream {
