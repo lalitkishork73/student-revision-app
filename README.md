@@ -1,85 +1,74 @@
-# student-revision-appSchool Revision App
 
-A fully functional, responsive web app for school students to revise their coursebooks with PDFs, quizzes, and AI-powered chat assistance.
+# Project Title
 
-Features
+A brief description of what this project does and who it's for
 
-Must-Have
+readme_content = """# Student Revision App
 
-Upload or select PDFs (NCERT Class XI Physics seeded for testing)
+A fully functional, responsive web app for school students to **revise coursebooks** using PDFs, quizzes, and **AI-powered chat assistance**.
 
-PDF Viewer alongside chat/quiz
+---
 
-Quiz Generator (MCQs, SAQs, LAQs)
+## 🚀 Features
 
-Tracks user progress with a mini-dashboard
+### Must-Have
 
-Nice-to-Have
+- 📂 Upload or select PDFs (seeded with NCERT Class XI Physics for testing)  
+- 📝 PDF viewer with side-by-side **chat & quiz generation**  
+- ❓ Quiz generator (MCQs, SAQs, LAQs)  
+- 📊 User progress tracking via a mini-dashboard  
 
-Chat UI (ChatGPT-inspired)
+### Nice-to-Have
 
-RAG-based answers with citations from PDFs
+- 💬 Chat UI inspired by ChatGPT  
+- 🔍 **RAG-based answers** with citations from PDFs  
+- 🎥 YouTube video recommendations based on PDF content  
 
-YouTube video recommendations based on PDF content
+---
 
-Tech Stack
+## 🛠️ Tech Stack
 
-Frontend
+**Frontend**
 
-React 19 + Vite
+- React 19 + Vite  
+- TypeScript, TailwindCSS  
+- Zustand (state management)  
+- pdf.js & react-pdf  
+- Radix UI components  
 
-TypeScript
+**Backend**
 
-TailwindCSS
+- Node.js + Express  
+- MongoDB (Mongoose)  
+- OpenAI API, LlamaIndex, Weaviate  
+- PDF parsing via `pdf-parse`  
+- Pinecone for vector embeddings  
+- Cloudflare R2 for file uploads & storage  
 
-Zustand for state management
+---
 
-pdf.js & react-pdf
+## 📂 Project Structure
 
-Radix UI components
+/frontend # React frontend
+/backend-node # Node.js backend
 
-Backend
+---
 
-Node.js + Express
+## ⚙️ Setup & Run (Local)
 
-MongoDB (Mongoose)
+### 1. Clone the repo
 
-OpenAI API, LlamaIndex, Weaviate
-
-PDF parsing with pdf-parse
-
-Pinecone for vector embeddings
-
-File uploads & storage with Cloudflare R2
-
-Project Structure
-/frontend       # React frontend
-/backend-node   # Node.js backend
-
-Setup & Run (Local)
-
-1. Clone the repository
+```bash
 git clone <repo_url>
 cd <repo_root>
 
-2. Create .env files
+2. Add .env files
 
-Frontend (.env)
+Frontend .env
 
-VITE_MONGO_URI=<your MongoDB URI>
-VITE_OPENAI_API_KEY=<your OpenAI key>
-VITE_WEAVIATE_CLUSTER_URL=<your Weaviate URL>
-VITE_WEAVIATE_API_KEY=<your Weaviate API key>
-VITE_LLAMA_CLOUD_API_KEY=<your Llama Cloud key>
-VITE_LLAMA_CLOUD_BASE_URL=<your Llama Cloud base URL>
-VITE_CF_ACCOUNT_ID=<Cloudflare account id>
-VITE_CF_ACCESS_KEY_ID=<Cloudflare access key id>
-VITE_CF_SECRET_ACCESS_KEY=<Cloudflare secret key>
-VITE_CF_BUCKET_NAME=<Cloudflare bucket>
-VITE_CF_PUBLIC_URL=<Cloudflare public URL>
+VITE_API_BASE_URL=http://localhost:5000/api/v1
 
-Backend (.env)
-
+Backend .env
 MONGO_URI=<your MongoDB URI>
 OPENAI_API_KEY=<your OpenAI key>
 WEAVIATE_CLUSTER_URL=<your Weaviate URL>
@@ -92,63 +81,53 @@ CF_SECRET_ACCESS_KEY=<Cloudflare secret key>
 CF_BUCKET_NAME=<Cloudflare bucket>
 CF_PUBLIC_URL=<Cloudflare public URL>
 
-Note: Replace credentials with your own if testing locally.
-
-
 
 3. Install dependencies
-
-Frontend
-
+# Frontend
 cd frontend
 npm install
 
-Backend
-
+# Backend
 cd backend-node
 npm install
 
 4. Run the apps
-
-Backend
-
+# Backend (default: http://localhost:5000)
 cd backend-node
 npm run dev
 
-Frontend
-
+# Frontend (default: http://localhost:5173)
 cd frontend
 npm run dev
 
-Frontend will run at <http://localhost:5173> by default. Backend at <http://localhost:5000> (or your configured port).
-
 5. Testing
 
-use Password to Login :{
-    "email": "<subhas1@mail.com>",
-    "password": "12345"
+Login with seeded credentials:
+{
+  "email": "subhas1@mail.com",
+  "password": "12345"
 }
 
-Upload PDFs or select seeded PDFs
 
-Open chat for each PDF
+Upload or pick seeded PDFs
 
-Generate quizzes and check dashboard for progress
+Use chat & quiz for each PDF
 
-On small screens, PDF list drawer is available via floating button
+Check dashboard for progress
 
-Notes
+On small screens, use floating button to access PDF list drawer
 
-Used LLMs (OpenAI + Llama Cloud) for chat, quiz generation, and RAG-based answers.
 
-Frontend is fully responsive; separate vertical scrolls for PDF list, chat, and PDF viewer.
+🤖 Why LLMs?
 
-Some features like YouTube video recommendations UI are present but not fully styled.
+We used LLM tools (OpenAI + Llama Cloud) for:
 
-Git Commits & Version Control
+Generating context-aware quizzes from PDFs
 
-Commits are verifiable to track project progress step-by-step.
+Powering AI chat assistance
 
-Contribution
+Building RAG-based answers with citations
 
-This is a submission assignment project; code is owned by the author.
+Experimenting with AI-driven recommendations (e.g., YouTube videos)
+
+These tools make the app more interactive, personalized, and useful for students, turning static PDFs into a dynamic learning experience.
