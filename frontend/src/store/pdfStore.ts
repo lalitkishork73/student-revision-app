@@ -5,6 +5,7 @@ export interface PDF {
   _id: string;
   name: string;
   path: string;
+  pdfVectorId:string
   createdAt: string;
 }
 

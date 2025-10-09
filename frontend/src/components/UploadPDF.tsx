@@ -2,13 +2,14 @@ import React, { useRef, useState } from 'react';
 import { Button } from '@/components/ui/button';
 import { usePDFStore } from '@/store/pdfStore';
 import { UploadCloud } from 'lucide-react';
+import {toast} from 'sonner'; // You can install this via `npm i react-hot-toast`
 
 export const UploadPDF: React.FC = () => {
     const [file, setFile] = useState<File | null>(null);
+    const [loading, setLoading] = useState(false);
     const addPDF = usePDFStore((state) => state.addPDF);
     const fileInputRef = useRef<HTMLInputElement>(null);
 
-    // Trigger hidden input click
     const handleButtonClick = () => {
         fileInputRef.current?.click();
     };
@@ -20,9 +21,20 @@ export const UploadPDF: React.FC = () => {
     };
 
     const handleUpload = async () => {
-        if (file) {
-            await addPDF(file);
+        if (!file) return;
+
+        setLoading(true);
+        toast.loading('Uploading PDF...', { id: 'uploadToast' });
+
+        try {
+            await addPDF(file); // waiting until API returns
+            toast.success('PDF uploaded successfully!', { id: 'uploadToast' });
             setFile(null);
+        } catch (err) {
+            console.error(err);
+            toast.error('Failed to upload PDF', { id: 'uploadToast' });
+        } finally {
+            setLoading(false);
         }
     };
 
@@ -35,21 +47,27 @@ export const UploadPDF: React.FC = () => {
                 ref={fileInputRef}
                 onChange={handleFileChange}
                 className="hidden"
-                title="input"
+                title="Select PDF"
             />
 
             {/* Upload Button */}
             <Button
                 className="flex items-center justify-center gap-2 bg-primary text-primary-foreground hover:bg-primary/90"
                 onClick={handleButtonClick}
+                disabled={loading}
             >
-                <UploadCloud size={20} /> {file ? file.name : 'Select PDF'}
+                <UploadCloud size={20} />
+                {file ? file.name : 'Select PDF'}
             </Button>
 
             {/* Upload Now Button */}
             {file && (
-                <Button onClick={handleUpload} className="bg-secondary text-secondary-foreground hover:bg-secondary/90">
-                    Upload
+                <Button
+                    onClick={handleUpload}
+                    className="bg-secondary text-secondary-foreground hover:bg-secondary/90"
+                    disabled={loading}
+                >
+                    {loading ? 'Uploading...' : 'Upload'}
                 </Button>
             )}
         </div>
