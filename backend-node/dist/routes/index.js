@@ -1,0 +1,22 @@
+"use strict";
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
+Object.defineProperty(exports, "__esModule", { value: true });
+const express_1 = require("express");
+const python_route_1 = __importDefault(require("./python.route"));
+const upload_route_1 = __importDefault(require("./upload.route"));
+const ask_route_1 = __importDefault(require("./ask.route"));
+const quiz_route_1 = __importDefault(require("./quiz.route"));
+const userAuth_route_1 = __importDefault(require("./userAuth.route"));
+const dashboard_route_1 = __importDefault(require("./dashboard.route"));
+const pdf_route_1 = __importDefault(require("./pdf.route"));
+const router = (0, express_1.Router)();
+router.use("/upload", upload_route_1.default);
+router.use("/ask", ask_route_1.default);
+router.use("/quiz", quiz_route_1.default);
+router.use("/python", python_route_1.default);
+router.use("/user", userAuth_route_1.default);
+router.use("/dashboard", dashboard_route_1.default);
+router.use("/pdf", pdf_route_1.default);
+exports.default = router;

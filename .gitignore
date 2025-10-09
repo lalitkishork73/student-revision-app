@@ -2,7 +2,7 @@
 # Node.js / JS / TS stuff
 # =========================
 node_modules/
-dist/
+# dist/
 build/
 .env
 .env.local
