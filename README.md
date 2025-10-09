@@ -65,17 +65,8 @@ cd <repo_root>
 **Frontend `.env`**  
 
 ```env
-VITE_MONGO_URI=<your MongoDB URI>
-VITE_OPENAI_API_KEY=<your OpenAI key>
-VITE_WEAVIATE_CLUSTER_URL=<your Weaviate URL>
-VITE_WEAVIATE_API_KEY=<your Weaviate API key>
-VITE_LLAMA_CLOUD_API_KEY=<your Llama Cloud key>
-VITE_LLAMA_CLOUD_BASE_URL=<your Llama Cloud base URL>
-VITE_CF_ACCOUNT_ID=<Cloudflare account id>
-VITE_CF_ACCESS_KEY_ID=<Cloudflare access key id>
-VITE_CF_SECRET_ACCESS_KEY=<Cloudflare secret key>
-VITE_CF_BUCKET_NAME=<Cloudflare bucket>
-VITE_CF_PUBLIC_URL=<Cloudflare public URL>
+
+VITE_API_BASE_URL=<Backend Api public URL>
 ```
 
 **Backend `.env`**  
