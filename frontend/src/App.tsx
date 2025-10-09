@@ -15,12 +15,12 @@ export default function Layout () {
 
       <div className="flex flex-1 pt-[calc(var(--navbar-height,4rem))]">
         {/* Sidebar fixed on left */}
-        <aside className="w-64 fixed top-[var(--navbar-height,4rem)] left-0 bottom-0 overflow-y-auto border-r bg-white">
+        <aside className="md:w-64 fixed top-[var(--navbar-height,4rem)] left-0 bottom-0 overflow-y-auto border-r bg-white">
           <Sidebar />
         </aside>
 
         {/* Main content */}
-        <main className="flex-1 ml-64 overflow-y-auto p-6">
+        <main className="flex-1 md:ml-64 overflow-y-auto p-6">
           <Outlet />
         </main>
       </div>

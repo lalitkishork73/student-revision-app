@@ -42,16 +42,16 @@ const Sidebar = () => {
                 </div>
 
                 {/* Upload PDF button */}
-                <div className="p-4 border-b border-border">
+                {/* <div className="p-4 border-b border-border">
                     <Button
                         className="w-full flex items-center justify-center gap-2 bg-primary text-primary-foreground hover:bg-primary/90"
                         onClick={() => {
-                            /* handle upload */
+                            
                         }}
                     >
                         <UploadCloud size={20} /> Upload PDF
                     </Button>
-                </div>
+                </div> */}
 
                 {/* Navigation links */}
                 <nav className="flex-1 flex flex-col p-2 mt-2">

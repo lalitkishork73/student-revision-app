@@ -3,9 +3,9 @@ import { createBrowserRouter } from "react-router-dom";
 import ProtectedRoute from "./ProtectedRoute";
 import Loading from "@/components/common/Loading";
 import Home from "@/pages/Home"
+import PDFSection from "@/pages/PDFSection"
 
 const Dashboard = lazy(() => import("../pages/Dashboard"));
-const PDFDetail = lazy(() => import("../pages/PDFDetail"));
 const NotFound = lazy(() => import("../pages/NotFound"));
 const Signup = lazy(() => import("../pages/Signup"));
 const Login = lazy(() => import("../pages/Login"));
@@ -26,7 +26,7 @@ const router = createBrowserRouter([
         ),
         children: [
             { path: "/dashboard", element: <Dashboard /> },
-            { path: "/pdf", element: <PDFDetail /> },
+            { path: "/pdf", element: <PDFSection /> },
         ],
     },
     { path: "*", element: <Suspense fallback={<Loading />}><NotFound /></Suspense> },
