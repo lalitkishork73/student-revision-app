@@ -31,10 +31,10 @@ const PDFGrid: React.FC = () => {
         <div className="flex flex-col gap-4 overflow-y-auto h-[70vh]">
           {pdfs?.map((pdf) => (
             <PDFCard
+              
               key={pdf._id}
               pdf={pdf}
               onClick={selectPDF}
-              className="w-full"
             />
           ))}
         </div>
@@ -52,7 +52,6 @@ const PDFGrid: React.FC = () => {
           </Button>
         </div>
       </div>
-
       {/* PDF Viewer */}
       {/* {selectedPDF && (
         <div
@@ -68,17 +67,16 @@ const PDFGrid: React.FC = () => {
           `}
         >
           {/* Close Button */}
-          {/* <Button
+      {/* <Button
             variant="ghost"
             className="absolute top-2 right-2 p-1 z-50"
             onClick={handleCloseViewer}
           >
             <X size={24} />
           </Button> */}
-
-          {/* PDF Viewer */}
-          {/* <PDFViewer /> */}
-        {/* </div> */} */
+      {/* PDF Viewer */}
+      {/* <PDFViewer /> */}
+      {/* </div> */} */
       {/* )} */}
     </div>
   );

@@ -4,11 +4,11 @@ import { Card, CardContent } from "@/components/ui/card";
 import { FileText, MessageCircle, Edit } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { useNavigate } from "react-router-dom";
-import { usePDFStore, PDF } from "@/store/pdfStore";
+import { usePDFStore } from "@/store/pdfStore";
 
 interface Props {
-    pdf: PDF;
-    onClick?: (pdf: PDF) => void;
+    pdf: any;
+    onClick?: (pdf: any) => void;
 }
 
 export const PDFCard: React.FC<Props> = ({ pdf, onClick }) => {

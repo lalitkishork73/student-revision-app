@@ -1,11 +1,18 @@
+# Use latest Node 20 Alpine image
 FROM node:20-alpine3.19
 
-# Update Alpine packages to patch vulnerabilities
-RUN apk update && apk upgrade --no-cache && rm -rf /var/cache/apk/*
-
+# Set working directory
 WORKDIR /app
+
+# Install dependencies
 COPY package*.json ./
-RUN npm install
+RUN npm install --production
+
+# Copy all source files
 COPY . .
+
+# Expose backend port
 EXPOSE 5000
+
+# Start the server in development mode
 CMD ["npm", "run", "dev"]

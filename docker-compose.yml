@@ -1,4 +1,5 @@
 version: "3.9"
+
 services:
   frontend:
     build: ./frontend
@@ -6,15 +7,30 @@ services:
       - "3000:5173"
     depends_on:
       - backend-node
+ 
 
   backend-node:
     build: ./backend-node
     ports:
       - "5000:5000"
-    depends_on:
-      - backend-python
+    environment:
+      - MONGO_URI=${MONGO_URI}
+      - OPENAI_API_KEY=${OPENAI_API_KEY}
+      - WEAVIATE_CLUSTER_URL=${WEAVIATE_CLUSTER_URL}
+      - WEAVIATE_API_KEY=${WEAVIATE_API_KEY}
+      - LLAMA_CLOUD_API_KEY=${LLAMA_CLOUD_API_KEY}
+      - LLAMA_CLOUD_BASE_URL=${LLAMA_CLOUD_BASE_URL}
+      - CF_ACCOUNT_ID=${CF_ACCOUNT_ID}
+      - CF_ACCESS_KEY_ID=${CF_ACCESS_KEY_ID}
+      - CF_SECRET_ACCESS_KEY=${CF_SECRET_ACCESS_KEY}
+      - CF_BUCKET_NAME=${CF_BUCKET_NAME}
+      - CF_PUBLIC_URL=${CF_PUBLIC_URL}
+  
 
-  backend-python:
-    build: ./backend-python
-    ports:
-      - "8000:8000"
+  # backend-python:
+  #   build: ./backend-python
+  #   ports:
+  #     - "8000:8000"
+  #   environment:
+  #     # Add any environment variables required by your Python backend
+  #     - PYTHON_ENV=development
