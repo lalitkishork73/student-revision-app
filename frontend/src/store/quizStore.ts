@@ -24,7 +24,7 @@ export const useQuizStore = create<QuizState>((set, get) => ({
   fetchQuiz: async (pdfVectorId, quizType) => {
     set({ loading: true });
     try {
-      const res = await generateQuiz({ pdfId: pdfVectorId, quizType });
+      const res:any = await generateQuiz({ pdfId: pdfVectorId, quizType });
       // Correct the API response parsing
       const questions = res?.quiz?.questions || [];
       const subject = questions?.[0]?.subject || null;

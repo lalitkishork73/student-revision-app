@@ -65,7 +65,7 @@ const ResponsivePDFSection: React.FC = () => {
                                 selectPDF(p);
                                 setDrawerOpen(false);
                             }}
-                            className="w-full mb-2"
+                            
                         />
                     ))}
                 </div>
