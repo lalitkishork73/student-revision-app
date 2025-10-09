@@ -1,5 +1,6 @@
 import { Request, Response } from 'express';
-import { generateQuizFromPDF, gradeQuiz } from '../services/quizService';
+import { generateQuizFromPDF } from '../services/quizService';
+import {submitTest} from "../services/submittest.service";
 
 export async function generateQuiz(req: Request, res: Response) {
   try {
@@ -14,16 +15,25 @@ export async function generateQuiz(req: Request, res: Response) {
   }
 }
 
-export async function submitQuiz(req: Request, res: Response) {
-  try {
-    const { quizId, answers, userId,pdfId } = req.body;
-    if (!quizId || !answers) return res.status(400).json({ error: 'Missing quizId or answers' });
 
-    // const result = await gradeQuiz(pdfId,quizId, answers, quiztyp);
-    let result={}
-    return res.status(200).json(result);
+
+export async function submitTestController(req: Request, res: Response) {
+  try {
+    const userId = (req as any).user.id;
+    const { subject, type, answers } = req.body;
+    // console.log(userId)
+
+    if (!subject || !type || !answers || !Array.isArray(answers)) {
+      return res.status(400).json({ error: "Invalid request body" });
+    }
+    // console.log(subject)
+
+    const test = await submitTest(userId, subject, type, answers);
+    // console.log(test)
+    return res.status(201).json({ message: "Test submitted", test });
   } catch (err: any) {
-    console.error('Quiz submission error:', err);
-    return res.status(500).json({ error: err.message || 'Quiz submission failed' });
+    console.error("submitTestController error:", err);
+    return res.status(500).json({ error: err.message });
   }
 }
+

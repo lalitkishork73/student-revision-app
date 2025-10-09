@@ -9,13 +9,15 @@ export async function retrieveAnswer(
   const topK = opts.topK || 4;
   const qVec = await getEmbedding(question);
   const chunks = await queryVectors(pdfId, qVec, topK);
-  // console.log("Retrieved chunks:", chunks);
+  console.log("Retrieved chunks:", chunks);
+  console.log("is it working")
   if (!chunks || chunks.length === 0) {
     return {
       answer: "I couldn't find relevant information in the document.",
       citations: [],
     };
   }
+
 
   const contextArray = chunks.map((c) => ({ page: c.page, text: c.text }));
   const contextJSON = JSON.stringify(contextArray, null, 2);
@@ -43,6 +45,8 @@ Return JSON in the exact format below:
     temperature: 0.0,
     maxTokens: 1500,
   });
+
+  console.log(parsed)
 
   const answer =
     typeof parsed.answer === "string"

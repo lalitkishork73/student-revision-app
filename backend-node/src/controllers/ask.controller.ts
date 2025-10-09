@@ -7,6 +7,7 @@ export async function handleAsk(req: Request, res: Response) {
     if (!pdfId || !question) {
       return res.status(400).json({ error: 'Missing pdfId or question' });
     }
+    console.log("isit wkri")
     
 
     const result = await retrieveAnswer(pdfId, question, { topK: 4 });

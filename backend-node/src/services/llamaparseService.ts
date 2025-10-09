@@ -33,6 +33,7 @@ export async function parseWithLlamaCloud(
     "page_separator",
     opts.pageSeparator || "\n===PAGE {pageNumber}===\n"
   );
+  form.append("parse_images", "false");
 
   const headers = {
     Authorization: `Bearer ${API_Key}`,
@@ -68,7 +69,7 @@ export async function parseWithLlamaCloud(
     );
   }
 
-  const timeoutMs = opts.timeoutMs || 60000;
+  const timeoutMs = opts.timeoutMs || 600000;
   const start = Date.now();
   while (true) {
     const details = await axios

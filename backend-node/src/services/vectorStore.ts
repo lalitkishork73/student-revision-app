@@ -93,6 +93,8 @@ export async function storeVectors(
     for (const chunk of chunks) {
       const embedding = await getEmbedding(chunk);
 
+      console.log(embedding)
+
       objectsToInsert.push({
         properties: {
           pdfId,
@@ -120,7 +122,7 @@ export async function queryVectors(
   const client = getWeaviateClient();
   const collection = client.collections.get("PDFChunk");
 
-  // const da = await collection.query.fetchObjects();
+  const da = await collection.query.fetchObjects();
   
 
   const result = await collection.query.nearVector(questionEmbedding, {
@@ -128,7 +130,7 @@ export async function queryVectors(
     returnMetadata: ["distance"],
     filters: collection.filter.byProperty("pdfId").equal(pdfId),
   });
-  // console.log("collection:", result);
+  console.log("collection:", da);
 
   return result.objects.map((obj) => ({
     text: obj.properties.text,

@@ -1,13 +1,29 @@
-import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
+import { Outlet } from "react-router-dom";
 
-function Home () {
-  return <h1 className="text-center text-3xl mt-10 border">Frontend: Hello World 🌟</h1>;
-}
+import Sidebar from "@/components/layout/Sidebar";
+import Header from "@/components/layout/Header"; // acting like Navbar
 
-function App () {
+const navbarHeight = "4rem"; // adjust if your Header height differs
+
+export default function Layout () {
   return (
-    <Home />
+    <div className="h-screen flex flex-col">
+      {/* Navbar fixed on top */}
+      <header className="fixed top-0 left-0 right-0 z-50">
+        <Header />
+      </header>
+
+      <div className="flex flex-1 pt-[calc(var(--navbar-height,4rem))]">
+        {/* Sidebar fixed on left */}
+        <aside className="w-64 fixed top-[var(--navbar-height,4rem)] left-0 bottom-0 overflow-y-auto border-r bg-white">
+          <Sidebar />
+        </aside>
+
+        {/* Main content */}
+        <main className="flex-1 ml-64 overflow-y-auto p-6">
+          <Outlet />
+        </main>
+      </div>
+    </div>
   );
 }
-
-export default App;

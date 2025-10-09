@@ -1,5 +1,4 @@
 import Quiz from "../models/quiz.model";
-import progressModel from "../models/progress.model";
 import { getEmbedding, createChatCompletion } from "./openaiService";
 import { queryVectors } from "./vectorStore";
 import { Types } from "mongoose";
@@ -92,6 +91,7 @@ Your response must be a JSON object with this exact structure:
       "options": ["option1", "option2", "option3", "option4"],
       "correctAnswer": "correct option text",
       "explanation": "explanation text",
+      "subject":"current test-subject (physics,maths,etc.)"
       "sourcePages": [1]
     }
   ]
@@ -144,6 +144,7 @@ Return the JSON object now.`;
       const doc = await Quiz.create({
         pdf: pdfId,
         user: new Types.ObjectId(userId),
+        subject:q.subject,
         type: q.type || quizType,
         question: q.question,
         options: q.options || [],
@@ -178,78 +179,3 @@ export async function getQuizQuestions(pdfId: string, userId: string) {
   return questions;
 }
 
-/**
- * Submit quiz answers
- */
-// export async function submitQuizAnswers(
-//   answers: Array<{ questionId: string; userAnswer: string }>
-// ) {
-//   const results = [];
-
-//   for (const { questionId, userAnswer } of answers) {
-//     const question = await Quiz.findById(questionId);
-    
-//     if (!question) continue;
-
-//     const isCorrect = question.answer === userAnswer;
-    
-//     question.attempted = true;
-//     question.userAnswer = userAnswer;
-//     question.isCorrect = isCorrect;
-//     await question.save();
-
-//     results.push({
-//       questionId,
-//       isCorrect,
-//       correctAnswer: question.answer,
-//       explanation: question.explanation,
-//     });
-//   }
-
-//   return results;
-// }
-
-
-
-export async function gradeQuiz(pdfId: string, answers: Record<string, string>, userId: string, quizType: "MCQ" | "SAQ" | "LAQ") {
-  const quizzes = await Quiz.find({ pdf: pdfId, user: userId, type: quizType });
-
-  let score = 0;
-  const results = quizzes?.map((q:any) => {
-    const userAns = answers[q?._id.toString()];
-    const correct = q.type === "MCQ"
-      ? userAns === q.answer
-      : String(userAns || "").trim().toLowerCase() === q.answer.trim().toLowerCase();
-
-    if (correct) score++;
-    q.attempted = true;
-    return {
-      questionId: q._id,
-      question: q.question,
-      userAnswer: userAns,
-      correctAnswer: q.answer,
-      correct,
-      explanation: q.explanation
-    };
-  });
-
-  await Quiz.bulkSave(quizzes);
-
-  await progressModel.findOneAndUpdate(
-    { user: userId, pdf: pdfId },
-    {
-      $push: {
-        attempts: {
-          quizType,
-          quiz: quizzes[0]._id,
-          score,
-          total: quizzes.length,
-          attemptedAt: new Date()
-        }
-      }
-    },
-    { upsert: true, new: true }
-  );
-
-  return { score, total: quizzes.length, results };
-}

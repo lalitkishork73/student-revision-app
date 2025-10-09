@@ -21,14 +21,18 @@ export async function createChatSuggestions(messages: any[], opts: { temperature
     max_tokens: opts.maxTokens ?? 1024
   });
 
+  console.log(response,"response")
+  console.log( response.choices?.[0]?.message,"response")
+  
   const rawContent = response.choices?.[0]?.message?.content ?? '';
   let suggestions: any[] = [];
   try {
     const parsed = JSON.parse(rawContent);
     if (Array.isArray(parsed)) suggestions = parsed;
-  } catch (e) {
+  } catch (e:any) {
     throw new Error('Failed to parse suggestions from model response');
   }
+  console.log(rawContent,"response")
 
   return suggestions;
 }

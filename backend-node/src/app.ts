@@ -28,7 +28,7 @@ const app = express();
 // app.use(helmet());
 
 // Enable CORS
-// app.use(cors());
+app.use(cors());
 
 // Parse JSON body
 app.use(express.json());
