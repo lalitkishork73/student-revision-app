@@ -7,7 +7,7 @@ const navbarHeight = "4rem"; // adjust if your Header height differs
 
 export default function Layout () {
   return (
-    <div className="h-screen flex flex-col bg-black">
+    <div className="h-screen flex flex-col">
       {/* Navbar fixed on top */}
       <header className="fixed top-0 left-0 right-0 z-50">
         <Header />

@@ -130,9 +130,9 @@ export async function queryVectors(
     returnMetadata: ["distance"],
     filters: collection.filter.byProperty("pdfId").equal(pdfId),
   });
-  console.log("collection:", da);
+  // console.log("collection:", da);
 
-  return result.objects.map((obj) => ({
+  return da.objects.map((obj) => ({
     text: obj.properties.text,
     page: obj.properties.page,
     score: obj.metadata?.distance ?? null,

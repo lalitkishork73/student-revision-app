@@ -56,16 +56,16 @@ export async function generateQuizFromPDF(
 ) {
   try {
     // Check for existing unattempted questions
-    const existing = await Quiz.find({
-      pdf: pdfId,
-      user: userId,
-      type: quizType,
-      attempted: false,
-    });
+    // const existing = await Quiz.find({
+    //   pdf: pdfId,
+    //   user: userId,
+    //   type: quizType,
+    //   attempted: false,
+    // });
 
-    if (existing.length >= 5) {
-      return { quizId: pdfId, questions: existing };
-    }
+    // if (existing.length >= 5) {
+    //   return { quizId: pdfId, questions: existing };
+    // }
 
     // Fetch relevant context
     const embedding = await getEmbedding(`Generate ${quizType} quiz questions`);

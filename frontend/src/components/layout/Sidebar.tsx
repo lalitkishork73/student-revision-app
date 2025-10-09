@@ -25,7 +25,7 @@ const Sidebar = () => {
 
             {/* Sidebar */}
             <aside
-                className={`fixed top-0 left-0 z-40 w-0 md:w-64 h-screen bg-card border-r border-border flex flex-col transition-transform
+                className={`fixed top-0 left-0 z-100 w-0 md:w-64 h-screen bg-card border-r border-border flex flex-col transition-transform
           ${menu ? "translate-x-0" : "-translate-x-full md:translate-x-0"} 
           w-64 md:w-64 shadow-lg md:shadow-none`}
             >
