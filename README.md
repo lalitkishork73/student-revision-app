@@ -1,9 +1,4 @@
-
-# Project Title
-
-A brief description of what this project does and who it's for
-
-readme_content = """# Student Revision App
+# Student Revision App
 
 A fully functional, responsive web app for school students to **revise coursebooks** using PDFs, quizzes, and **AI-powered chat assistance**.
 
@@ -49,8 +44,10 @@ A fully functional, responsive web app for school students to **revise courseboo
 
 ## 📂 Project Structure
 
-/frontend # React frontend
-/backend-node # Node.js backend
+```
+/frontend       # React frontend
+/backend-node   # Node.js backend
+```
 
 ---
 
@@ -61,14 +58,29 @@ A fully functional, responsive web app for school students to **revise courseboo
 ```bash
 git clone <repo_url>
 cd <repo_root>
+```
 
-2. Add .env files
+### 2. Add `.env` files  
 
-Frontend .env
+**Frontend `.env`**  
 
-VITE_API_BASE_URL=http://localhost:5000/api/v1
+```env
+VITE_MONGO_URI=<your MongoDB URI>
+VITE_OPENAI_API_KEY=<your OpenAI key>
+VITE_WEAVIATE_CLUSTER_URL=<your Weaviate URL>
+VITE_WEAVIATE_API_KEY=<your Weaviate API key>
+VITE_LLAMA_CLOUD_API_KEY=<your Llama Cloud key>
+VITE_LLAMA_CLOUD_BASE_URL=<your Llama Cloud base URL>
+VITE_CF_ACCOUNT_ID=<Cloudflare account id>
+VITE_CF_ACCESS_KEY_ID=<Cloudflare access key id>
+VITE_CF_SECRET_ACCESS_KEY=<Cloudflare secret key>
+VITE_CF_BUCKET_NAME=<Cloudflare bucket>
+VITE_CF_PUBLIC_URL=<Cloudflare public URL>
+```
 
-Backend .env
+**Backend `.env`**  
+
+```env
 MONGO_URI=<your MongoDB URI>
 OPENAI_API_KEY=<your OpenAI key>
 WEAVIATE_CLUSTER_URL=<your Weaviate URL>
@@ -80,9 +92,13 @@ CF_ACCESS_KEY_ID=<Cloudflare access key id>
 CF_SECRET_ACCESS_KEY=<Cloudflare secret key>
 CF_BUCKET_NAME=<Cloudflare bucket>
 CF_PUBLIC_URL=<Cloudflare public URL>
+```
 
+---
 
-3. Install dependencies
+### 3. Install dependencies
+
+```bash
 # Frontend
 cd frontend
 npm install
@@ -90,8 +106,13 @@ npm install
 # Backend
 cd backend-node
 npm install
+```
 
-4. Run the apps
+---
+
+### 4. Run the apps
+
+```bash
 # Backend (default: http://localhost:5000)
 cd backend-node
 npm run dev
@@ -99,35 +120,49 @@ npm run dev
 # Frontend (default: http://localhost:5173)
 cd frontend
 npm run dev
+```
 
-5. Testing
+---
 
-Login with seeded credentials:
+### 5. Testing
+
+Login with seeded credentials:  
+
+```json
 {
   "email": "subhas1@mail.com",
   "password": "12345"
 }
+```
 
+- Upload or pick seeded PDFs  
+- Use chat & quiz for each PDF  
+- Check dashboard for progress  
+- On small screens, use floating button to access PDF list drawer  
 
-Upload or pick seeded PDFs
+---
 
-Use chat & quiz for each PDF
+## 🤖 Why LLMs?
 
-Check dashboard for progress
+We used **LLM tools (OpenAI + Llama Cloud)** for:  
 
-On small screens, use floating button to access PDF list drawer
+- Generating **context-aware quizzes** from PDFs  
+- Powering **AI chat assistance**  
+- Building **RAG-based answers** with citations  
+- Experimenting with AI-driven recommendations (e.g., YouTube videos)  
 
+These tools make the app **more interactive, personalized, and useful for students**, turning static PDFs into a dynamic learning experience.  
 
-🤖 Why LLMs?
+---
 
-We used LLM tools (OpenAI + Llama Cloud) for:
+## 📝 Notes
 
-Generating context-aware quizzes from PDFs
+- Frontend is **fully responsive** (separate vertical scrolls for PDF list, chat, PDF viewer).  
+- Some features (e.g., YouTube recommendations UI) are present but **not fully styled**.  
+- Commits are structured to show step-by-step progress.  
 
-Powering AI chat assistance
+---
 
-Building RAG-based answers with citations
+## 🤝 Contribution
 
-Experimenting with AI-driven recommendations (e.g., YouTube videos)
-
-These tools make the app more interactive, personalized, and useful for students, turning static PDFs into a dynamic learning experience.
+This is a submission project, code ownership belongs to the author.  
