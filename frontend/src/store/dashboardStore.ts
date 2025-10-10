@@ -26,10 +26,10 @@ export const useDashboardStore = create<DashboardState>((set, get) => ({
   loading: false,
   error: null,
   data: [],
-  subject: "Web Development",
-  type: "MCQ",
-  fromDate: "2025-09-01",
-  toDate: "2025-10-30",
+  subject: "",
+  type: "",
+  fromDate: "",
+  toDate: "",
 
   setFilters: (filters) => set(filters),
 
@@ -38,7 +38,8 @@ export const useDashboardStore = create<DashboardState>((set, get) => ({
     set({ loading: true, error: null });
     try {
       const response = await getDashboardData(subject, type, fromDate, toDate);
-    //   console.log(response)
+      console.log(response)
+    
       set({ data: response || [], loading: false });
     } catch (err: any) {
       set({ error: err.message || "Failed to fetch dashboard data", loading: false });
