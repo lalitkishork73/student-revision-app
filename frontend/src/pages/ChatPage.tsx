@@ -53,7 +53,7 @@ console.log(response)
     };
 
     return (
-        <div className="flex flex-col h-full max-h-screen border rounded shadow-lg w-full ">
+        <div className="flex flex-col border rounded shadow-lg w-full h-full">
             <div className="p-4 border-b flex justify-between items-center">
                 <h2 className="text-lg font-semibold">Chat with PDF {vectorId}</h2>
                 {selectedPDF && (

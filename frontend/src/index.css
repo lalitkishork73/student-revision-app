@@ -1,14 +1,14 @@
 @import "tailwindcss";
 @import "tw-animate-css";
 
-@custom-variant dark (&:is(.dark *));
+/* @custom-variant dark (&:is(.dark *)); */
 
 :root {
   font-family: system-ui, Avenir, Helvetica, Arial, sans-serif;
   line-height: 1.5;
   font-weight: 400;
 
-  color-scheme: dark;
+  /* color-scheme: dark; */
   color: rgba(255, 255, 255, 0.87);
   background-color: #0f0f0f;
 
@@ -52,8 +52,8 @@
 
   /* Charts */
   --chart-1: oklch(0.65 0.22 41);
-  --chart-2: oklch(0.6 0.12 184);
-  --chart-3: oklch(0.4 0.07 227);
+  /* --chart-2: oklch(0.6 0.12 184); */
+  /* --chart-3: oklch(0.4 0.07 227); */
   --chart-4: oklch(0.75 0.18 84);
   --chart-5: oklch(0.7 0.18 70);
 
@@ -71,11 +71,11 @@
 
 a {
   font-weight: 500;
-  color: #646cff;
+  color: #ffffff;
   text-decoration: inherit;
 }
 a:hover {
-  color: #535bf2;
+  color: #0a0a0a;
 }
 
 body {
@@ -114,12 +114,38 @@ button:focus-visible {
     background-color: #ffffff;
   }
   a:hover {
-    color: #747bff;
+    color: #dbdbdb;
   }
   button {
     background-color: #f9f9f9;
   }
 }
+
+/* Global Scrollbar Styles */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px; /* for horizontal scrollbar */
+}
+
+::-webkit-scrollbar-thumb {
+  background-color: var(black);
+  border-radius: 9999px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background-color: rgba(100, 100, 100, 0.7);
+}
+
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+/* For Firefox */
+* {
+  scrollbar-width: thin;
+  scrollbar-color: var(black) transparent;
+}
+
 
 @theme inline {
   --radius-sm: calc(var(--radius) - 4px);

@@ -23,55 +23,67 @@ export const PDFCard: React.FC<Props> = ({ pdf, onClick }) => {
     };
 
     const openQuiz = (e: React.MouseEvent) => {
-        e.stopPropagation(); // 🚫 stop upper click
+        e.stopPropagation();
         selectPDF(pdf);
         const id = pdf.pdfVectorId || pdf._id;
         navigate(`/pdf/${id}/quiz`);
     };
 
     const openChat = (e: React.MouseEvent) => {
-        e.stopPropagation(); // 🚫 stop upper click
+        e.stopPropagation();
         selectPDF(pdf);
         const id = pdf.pdfVectorId || pdf._id;
         navigate(`/pdf/${id}/chat`);
     };
 
     return (
-        <Card className="hover:shadow-lg transition-shadow flex flex-col items-center w-56 h-56">
-            <CardContent className="flex flex-col items-center p-2 w-full h-full justify-between">
-                {/* Upper Section → opens PDF */}
+        <Card
+            className="group hover:shadow-md hover:border-gray-400 transition-all duration-300 
+                 flex flex-col w-full h-auto rounded-xl border border-gray-300 
+                 bg-card dark:border-gray-700"
+        >
+            <CardContent className="flex flex-col items-center p-4 w-full h-full justify-between">
+                {/* Thumbnail + Title → Click to Open */}
                 <div
-                    className="flex flex-col items-center cursor-pointer w-full"
+                    className="flex flex-col items-center justify-center cursor-pointer w-full"
                     onClick={handleOpenPDF}
                 >
-                    <div className="w-16 h-16 flex items-center justify-center bg-gray-100 rounded-full">
-                        <FileText className="w-8 h-8 text-red-600" />
+                    {/* Thumbnail Icon */}
+                    <div className="w-14 h-14 flex items-center justify-center bg-gray-200 dark:bg-gray-700 rounded-lg mb-2">
+                        <FileText className="w-7 h-7 text-gray-600 dark:text-gray-300" />
                     </div>
 
-                    <div className="mt-2 text-sm font-medium text-center truncate w-full px-2">
-                        {pdf.name}
+                    {/* Title */}
+                    <div
+                        className="text-sm font-medium text-center truncate w-full px-2 text-gray-800 dark:text-gray-200 group-hover:text-gray-900 dark:group-hover:text-white"
+                        title={pdf.title}
+                    >
+                        {pdf.title}
                     </div>
 
-                    <div className="mt-1 text-xs text-gray-400">
+                    {/* Date */}
+                    <div className="mt-1 text-xs text-gray-500 dark:text-gray-400">
                         {new Date(pdf.createdAt).toLocaleDateString()}
                     </div>
                 </div>
 
-                {/* Buttons → only Chat/Quiz */}
-                <div className="flex flex-col    sm:flex-row gap-2 mt-3 w-full">
+                {/* Action Buttons */}
+                <div className="flex flex-col-reverse gap-3 mt-4 w-full">
                     <Button
                         size="sm"
                         variant="outline"
-                        className="flex-1"
+                        className="flex-1 rounded-lg border-gray-400 text-gray-700 hover:bg-gray-200 dark:border-gray-600 dark:text-gray-300 dark:hover:bg-gray-700"
                         onClick={openChat}
+                        title="Chat"
                     >
                         <MessageCircle className="w-4 h-4 mr-1" /> Chat
                     </Button>
                     <Button
                         size="sm"
                         variant="outline"
-                        className="flex-1"
+                        className="flex-1 rounded-lg border-gray-400 text-gray-700 hover:bg-gray-200 dark:border-gray-600 dark:text-gray-300 dark:hover:bg-gray-700"
                         onClick={openQuiz}
+                        title="Quiz"
                     >
                         <Edit className="w-4 h-4 mr-1" /> Quiz
                     </Button>

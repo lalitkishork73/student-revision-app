@@ -63,12 +63,17 @@ export const UploadPDF: React.FC = () => {
             {/* Upload Now Button */}
             {file && (
                 <Button
-                    onClick={handleUpload}
-                    className="bg-secondary text-secondary-foreground hover:bg-secondary/90"
-                    disabled={loading}
-                >
-                    {loading ? 'Uploading...' : 'Upload'}
-                </Button>
+  className="flex items-center justify-center gap-2 
+             bg-blue-600 text-white 
+             hover:bg-blue-700 active:bg-blue-800 
+             shadow-md hover:shadow-lg transition-all"
+  onClick={handleButtonClick}
+  disabled={loading}
+>
+  <UploadCloud size={20} />
+  {file ? file.name : 'Select PDF'}
+</Button>
+
             )}
         </div>
     );

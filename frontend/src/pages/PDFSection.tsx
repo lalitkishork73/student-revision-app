@@ -1,121 +1,141 @@
 // src/components/ResponsivePDFSection.tsx
 import React, { useState, useEffect } from "react";
-import { Outlet } from "react-router-dom";
+import { Outlet, useLocation, useNavigate } from "react-router-dom";
 import { PDFViewer } from "@/components/PDFViewSidebar";
 import { PDFCard } from "@/components/PDFCard";
 import { UploadPDF } from "@/components/UploadPDF";
 import { Button } from "@/components/ui/button";
 import { usePDFStore } from "@/store/pdfStore";
-import { Sidebar, X } from "lucide-react";
+import { X } from "lucide-react";
 
 const ResponsivePDFSection: React.FC = () => {
     const { pdfs, selectedPDF, selectPDF, fetchPDFs, page, limit, total } =
         usePDFStore();
 
-    const [drawerOpen, setDrawerOpen] = useState(false);
+    const [viewerOpen, setViewerOpen] = useState(false);
+    const [modalOpen, setModalOpen] = useState(false);
+
     const totalPages = Math.ceil(total / limit);
+    const location = useLocation();
+    const navigate = useNavigate();
 
     useEffect(() => {
         fetchPDFs();
     }, [fetchPDFs]);
 
+    // Open modal if route is quiz/chat
+    useEffect(() => {
+        if (
+            location.pathname.includes("/quiz") ||
+            location.pathname.includes("/chat")
+        ) {
+            setModalOpen(true);
+        } else {
+            setModalOpen(false);
+        }
+    }, [location]);
+
+    // open viewer when PDF is selected
+    useEffect(() => {
+        if (selectedPDF) setViewerOpen(true);
+        else setViewerOpen(false);
+    }, [selectedPDF]);
+
     return (
-        <div className="flex flex-col lg:flex-row h-screen overflow-hidden relative">
-            {/* Floating drawer button */}
-            <Button
-                className="fixed top-1/2 right-2 z-50 transform -translate-y-1/2
-    lg:hidden bg-blue-600 text-white hover:bg-blue-700
-    p-3 rounded-full shadow-lg flex items-center justify-center"
-                onClick={() => setDrawerOpen(prev => !prev)} // toggle drawer
-                title={drawerOpen ? "Close PDF List" : "Open PDF List"}
-            >
-                {drawerOpen ? <X size={24} /> : <Sidebar size={24} />}
-            </Button>
+        <div className="flex flex-col min-h-[100%] overflow-hidden relative p-4">
+            {/* PDF Upload */}
+            <UploadPDF />
 
-            {/* PDF List Drawer */}
-            <div
-                className={`
-          fixed top-0 left-0 z-40 transform transition-transform duration-300
-          w-72 h-screen p-4 bg-black/70 backdrop-blur-md text-white
-          rounded-r-lg shadow-lg flex flex-col
-          ${drawerOpen ? "translate-x-0" : "-translate-x-full"}
-          lg:translate-x-0 lg:relative lg:w-1/4 lg:h-screen  lg:text-black lg:backdrop-blur-0
-        `}
-            >
-                <div className="flex justify-between items-center mb-4">
-                    <h2 className="text-lg font-semibold">PDFs</h2>
-                    <Button
-                        variant="ghost"
-                        className="lg:hidden text-white"
-                        onClick={() => setDrawerOpen(false)}
-                    >
-                        <X size={20} />
-                    </Button>
-                </div>
-
-                <UploadPDF />
-
-                {/* Scrollable PDF list */}
-                <div className="flex-1 mt-2 overflow-y-auto scrollbar-thin scrollbar-thumb-gray-400 scrollbar-track-gray-900/20">
+            {/* PDF Grid */}
+            <div className="mt-4 flex-1 overflow-y-auto scrollbar-thin scrollbar-thumb-gray-400 scrollbar-track-gray-200">
+                <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 xl:grid-cols-4 gap-4">
                     {pdfs?.map((pdf) => (
                         <PDFCard
                             key={pdf._id}
                             pdf={pdf}
                             onClick={(p) => {
                                 selectPDF(p);
-                                setDrawerOpen(false);
                             }}
-                            
                         />
                     ))}
                 </div>
+            </div>
 
-                {/* Pagination */}
-                <div className="flex justify-between mt-2">
-                    <Button onClick={() => fetchPDFs(page - 1)} disabled={page <= 1}>
-                        Previous
+            <div className="flex items-center justify-center gap-4 mt-6">
+                {/* Previous Button */}
+                <Button
+                    onClick={() => fetchPDFs(page - 1)}
+                    disabled={page <= 1}
+                    className="px-4 py-2 rounded-full bg-gradient-to-r from-gray-200 to-gray-300 text-gray-700 
+               hover:from-gray-300 hover:to-gray-400 disabled:opacity-40 disabled:cursor-not-allowed shadow-md"
+                >
+                    ⬅ Previous
+                </Button>
+
+                {/* Page Info */}
+                <div className="px-6 py-2 rounded-full bg-gray-100 text-gray-700 shadow-sm text-sm font-medium">
+                    Page <span className="font-bold">{page}</span> of{" "}
+                    <span className="font-bold">{totalPages}</span> | Items:{" "}
+                    <span className="font-bold">{total}</span>
+                </div>
+
+                {/* Next Button */}
+                <Button
+                    onClick={() => fetchPDFs(page + 1)}
+                    disabled={page >= totalPages}
+                    className="px-4 py-2 rounded-full bg-gradient-to-r from-blue-500 to-blue-600 text-white 
+               hover:from-blue-600 hover:to-blue-700 disabled:opacity-40 disabled:cursor-not-allowed shadow-md"
+                >
+                    Next ➡
+                </Button>
+            </div>
+
+
+            {/* PDF Viewer Drawer (from right side) */}
+            <div
+                className={`
+          fixed inset-y-0 right-0 w-full lg:w-1/2 shadow-2xl z-40
+          transform transition-transform duration-500 ease-in-out
+          flex flex-col
+          ${viewerOpen ? "translate-x-0" : "translate-x-full"}
+        `}
+            >
+                {/* Header */}
+                <div className="flex justify-between items-center p-3 border-b bg-gray-100">
+                    <h2 className="font-semibold">PDF Viewer</h2>
+                    <Button variant="ghost" onClick={() => selectPDF(null)}>
+                        <X size={20} />
                     </Button>
-                    <Button onClick={() => fetchPDFs(page + 1)} disabled={page >= totalPages}>
-                        Next
-                    </Button>
+                </div>
+
+                {/* Scrollable PDF */}
+                <div className="flex-1 overflow-y-auto scrollbar-thin scrollbar-thumb-gray-400 scrollbar-track-gray-200 p-2">
+                    <PDFViewer />
                 </div>
             </div>
 
-            {/* Middle column: Outlet */}
-            <div className="flex-1 h-screen overflow-y-auto scrollbar-thin scrollbar-thumb-gray-400 scrollbar-track-gray-200 px-4 flex flex-col items-center justify-center">
-                <Outlet />
-                {/* Placeholder message if no route is matched */}
-                {!window.location.pathname.includes("/quiz") &&
-                    !window.location.pathname.includes("/chat") && (
-                        <div className="text-gray-500 text-center p-4">
-                            <h2 className="text-lg font-semibold mb-2">No Quiz or Chat Selected</h2>
-                            <p>Please select a quiz or chat from the menu to start.</p>
+            {/* Modal for Outlet */}
+            {modalOpen && (
+                <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50">
+                    <div className="bg-black rounded-xl shadow-lg w-11/12 md:w-3/4 lg:w-1/2 max-h-[90vh] flex flex-col">
+                        {/* Modal Header */}
+                        <div className="flex justify-between items-center p-4 border-b text-white">
+                            <h2 className="text-lg font-semibold">Content</h2>
+                            <Button
+                                variant="ghost"
+                                onClick={() => {
+                                    setModalOpen(false);
+                                    navigate(-1); // go back
+                                }}
+                            >
+                                <X size={20} />
+                            </Button>
                         </div>
-                    )}
-            </div>
 
-            {/* PDF Viewer */}
-            {selectedPDF && (
-                <div
-                    className={`
-            w-full lg:w-1/4
-            h-64 lg:h-screen
-            border-t lg:border-t-0 lg:border-l
-            bg-white shadow-lg flex flex-col overflow-hidden
-            mt-auto lg:mt-0
-          `}
-                >
-                    {/* Close button for mobile */}
-                    <div className="flex justify-between items-center p-2 border-b lg:hidden">
-                        <span>PDF Viewer</span>
-                        <Button variant="ghost" onClick={() => selectPDF(null)}>
-                            <X size={20} />
-                        </Button>
-                    </div>
-
-                    {/* Scrollable PDF area */}
-                    <div className="flex-1 overflow-y-auto scrollbar-thin scrollbar-thumb-gray-400 scrollbar-track-gray-200 p-2">
-                        <PDFViewer />
+                        {/* Modal Body */}
+                        <div className="flex-1 overflow-y-auto p-4 text-white">
+                            <Outlet />
+                        </div>
                     </div>
                 </div>
             )}

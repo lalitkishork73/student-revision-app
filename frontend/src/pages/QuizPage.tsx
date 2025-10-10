@@ -34,7 +34,7 @@ const QuizPage = () => {
     };
 
     return (
-        <div className="p-4">
+        <div className="p-4h-full ">
             <h2 className="text-xl font-bold mb-4">Quiz Generator</h2>
 
             {!submitted && (
